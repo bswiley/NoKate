@@ -14,16 +14,50 @@ module.exports = () => {
       install: './src/js/install.js'
     },
     output: {
-      filename: '[name].bundle.js',
+      filename: 'NoKate.bundle.js',
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-      
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+      }),
+      new WebpackPwaManifest({
+        name: 'NoKate',
+        short_name: 'NoKate',
+        description: 'Not Kate text editor',
+        background_color: '#ffffff',
+        theme_color: '#000000',
+        start_url: '/',
+        icons: [
+          {
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512], // Adjust the sizes as needed
+          },
+        ],
+      }),
+      new InjectManifest({
+        swSrc: './sw.js', 
+        swDest: 'sw.js'
+      }),
     ],
+
 
     module: {
       rules: [
-        
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+            },
+          },
+        },
       ],
     },
   };
