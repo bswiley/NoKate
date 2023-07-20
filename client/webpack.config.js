@@ -3,6 +3,9 @@ const WebpackPwaManifest = require('webpack-pwa-manifest');
 const path = require('path');
 const { InjectManifest } = require('workbox-webpack-plugin');
 
+// TODO: Add and configure workbox plugins for a service worker and manifest file.
+// TODO: Add CSS loaders and babel to webpack.
+
 module.exports = () => {
   return {
     mode: 'development',
@@ -33,10 +36,11 @@ module.exports = () => {
         ],
       }),
       new InjectManifest({
-        swSrc: './src/sw.js', // Adjust the path to your service worker file
+        swSrc: './sw.js', 
         swDest: 'sw.js'
       }),
     ],
+
 
     module: {
       rules: [
@@ -51,22 +55,6 @@ module.exports = () => {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
-            },
-          },
-        },
-        {
-          test: /\.(png|jpe?g|gif)$/i,
-          type: 'asset/resource',
-          generator: {
-            filename: 'images/[name].[hash][ext]',
-          },
-          // Add a custom option to specify the size of the image
-          // 96 x 96 pixels in this case
-          options: {
-            parser: {
-              dataUrlCondition: {
-                maxSize: 96 * 96,
-              },
             },
           },
         },
