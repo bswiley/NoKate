@@ -22,6 +22,7 @@ module.exports = () => {
         template: './index.html',
       }),
       new WebpackPwaManifest({
+        fingerprints: false,
         name: 'NoKate',
         short_name: 'Jate',
         description: 'Not Kate text editor',
@@ -31,8 +32,8 @@ module.exports = () => {
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
-            sizes: [96, 128, 192, 256, 384, 512], // Adjust the sizes as needed
-          },
+            sizes: [ 96, 128, 192, 256, 384, 512], // Adjust the sizes as needed
+            destination: path.join('assets', 'icons'),},
         ],
       }),
       new InjectManifest({
