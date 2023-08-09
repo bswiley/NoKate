@@ -23,6 +23,10 @@ module.exports = () => {
         template: './index.html',
         title: 'No-Kate'
       }),
+      new InjectManifest({
+        swSrc: './sw.js', 
+        swDest: 'sw.js'
+      }),
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
@@ -39,11 +43,8 @@ module.exports = () => {
             destination: path.join('assets', 'icons'),},
         ],
       }),
-      new InjectManifest({
-        swSrc: './sw.js', 
-        swDest: 'sw.js'
-      }),
     ],
+      
 
 
     module: {
@@ -53,7 +54,7 @@ module.exports = () => {
           use: ['style-loader', 'css-loader'],
         },
         {
-          test: /\.js$/,
+          test: /\.m?js$/,
           exclude: /node_modules/,
           use: {
             loader: 'babel-loader',
